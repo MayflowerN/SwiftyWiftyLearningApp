@@ -19,16 +19,23 @@ class ContentModel: ObservableObject {
     @Published var currentLesson: Lesson?
     var currentLessonIndex = 0
     
+    //Current question
+    @Published var currentQuestion: Question?
+    var currentQuestionIndex = 0
+    
     //Current lesson explanation
-    @Published var lessonDescription = NSAttributedString()
+    @Published var codeText = NSAttributedString()
     var styleData: Data?
     
     //Current selected content and test
     @Published var currentContentSelected:Int?
+    @Published var currentTestSelected:Int?
     init() {
         
+        //Parse local included json data
         getLocalData()
-        
+        //Download remote json file and parse data
+        getRemoteData()
     }
     //MARK: - Data methods
     func getLocalData() {
@@ -67,6 +74,47 @@ class ContentModel: ObservableObject {
             print("Couldn't parse style data")
         }
     }
+    
+    func getRemoteData() {
+        // String path
+        let urlString = "https://mayflowern.github.io/learningapp-data/data2.json"
+        
+        //Create a url object
+        let url = URL(string: urlString)
+        
+        guard url != nil else {
+            //Couldn't create url
+            return
+        }
+        // Create a URLRequest object
+        let request = URLRequest(url: url!)
+        //Get the session and kick off the task
+        let session = URLSession.shared
+        
+        let dataTask = session.dataTask(with: request) { (data, response, error) in
+            //Check if there's an error
+            guard error == nil else {
+                //There was an error
+                return
+            }
+            do {
+            //Create json decoder
+            let decoder = JSONDecoder()
+            //Decode
+            let modules = try decoder.decode([Module].self, from: data!)
+            
+            //Append parsed modules into modules property
+            self.modules += modules
+        }
+        catch {
+            //Couldn't parse json
+        }
+            
+        }
+        // Kick off data task
+        dataTask.resume()
+        
+    }
     // MARK: - Module navigation methods
     func beginModule(_ moduleid:Int) {
         //Find the index for this module id
@@ -92,7 +140,7 @@ class ContentModel: ObservableObject {
         }
         //Set the current lesson
         currentLesson = currentModule!.content.lessons[currentLessonIndex]
-        lessonDescription = addStyling(currentLesson!.explanation)
+        codeText = addStyling(currentLesson!.explanation)
     }
     
     func nextLesson() {
@@ -102,7 +150,7 @@ class ContentModel: ObservableObject {
         if currentLessonIndex < currentModule!.content.lessons.count {
             //Set the current lesson property
             currentLesson = currentModule!.content.lessons[currentLessonIndex]
-            lessonDescription = addStyling(currentLesson!.explanation)
+            codeText = addStyling(currentLesson!.explanation)
         }
         else {
             //Reset the lesson state
@@ -114,6 +162,36 @@ class ContentModel: ObservableObject {
     func hasNextLesson() -> Bool {
         
         return (currentLessonIndex + 1 < currentModule!.content.lessons.count)
+    }
+    
+    func beginTest(_ moduleId:Int) {
+        //Set the current module
+        beginModule(moduleId)
+        //Set the current question index
+        currentQuestionIndex = 0
+        
+        //If there are questions, set hte current question to the first one 
+        if currentModule?.test.questions.count ?? 0 > 0 {
+            currentQuestion = currentModule!.test.questions[currentQuestionIndex]
+        //Set the question content
+            codeText = addStyling(currentQuestion!.content)
+        }
+    }
+    func nextQuestion() {
+        //Advance the question index
+        currentQuestionIndex += 1
+        //Check that it's within the range of questions
+        if currentQuestionIndex < currentModule!.test.questions.count {
+            //Set the current question
+            currentQuestion = currentModule!.test.questions[currentQuestionIndex]
+            codeText = addStyling(currentQuestion!.content)
+        }
+        else {
+            //If not, then reset the properties
+            currentQuestionIndex = 0
+            currentQuestion = nil
+        }
+     
     }
     //MARK: - Coding Styling
     private func addStyling(_ htmlString: String) -> NSAttributedString {

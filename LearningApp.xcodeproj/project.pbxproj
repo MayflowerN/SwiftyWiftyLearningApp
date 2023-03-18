@@ -23,6 +23,8 @@
 		9A80111D29B9BBAB0032797B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80111C29B9BBAB0032797B /* Constants.swift */; };
 		9A80116029B9F3590032797B /* CodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80115F29B9F3580032797B /* CodeTextView.swift */; };
 		9A80119D29BEB8390032797B /* RectangleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80119C29BEB8380032797B /* RectangleCard.swift */; };
+		9A8011BB29BEC55F0032797B /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8011BA29BEC55F0032797B /* TestView.swift */; };
+		9A8011BD29C06E290032797B /* TestResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8011BC29C06E280032797B /* TestResultView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		9A80111C29B9BBAB0032797B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9A80115F29B9F3580032797B /* CodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTextView.swift; sourceTree = "<group>"; };
 		9A80119C29BEB8380032797B /* RectangleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCard.swift; sourceTree = "<group>"; };
+		9A8011BA29BEC55F0032797B /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		9A8011BC29C06E280032797B /* TestResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestResultView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,13 +104,15 @@
 		9A80110229B0B9670032797B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9A80110F29B559410032797B /* HomeViewRow.swift */,
 				9A80111129B55B220032797B /* HomeView.swift */,
+				9A80110F29B559410032797B /* HomeViewRow.swift */,
 				9A80111329B567180032797B /* ContentView.swift */,
 				9A80111529B56F890032797B /* ContentViewRow.swift */,
 				9A80111729B9B6300032797B /* ContentDetailView.swift */,
+				9A8011BA29BEC55F0032797B /* TestView.swift */,
 				9A80115F29B9F3580032797B /* CodeTextView.swift */,
 				9A80119C29BEB8380032797B /* RectangleCard.swift */,
+				9A8011BC29C06E280032797B /* TestResultView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -224,6 +230,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A8011BB29BEC55F0032797B /* TestView.swift in Sources */,
+				9A8011BD29C06E290032797B /* TestResultView.swift in Sources */,
 				9A80111029B559410032797B /* HomeViewRow.swift in Sources */,
 				9A8010F529B0B9080032797B /* LearningApp.swift in Sources */,
 				9A80111429B567180032797B /* ContentView.swift in Sources */,
