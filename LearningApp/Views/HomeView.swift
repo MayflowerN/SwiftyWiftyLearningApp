@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct HomeView: View {
     
     @EnvironmentObject var model: ContentModel
@@ -20,34 +19,34 @@ struct HomeView: View {
                     LazyVStack {
                         ForEach(model.modules) { module in
                             VStack (spacing: 20) {
-                                
-                                NavigationLink(
-                                    destination:
-                                        ContentView()
-                                        .onAppear(perform: {
-                                            model.beginModule(module.id)
-                                        }),
-                                    tag: module.id,
-                                    selection: $model.currentContentSelected) {
-                                        //Learning Card
-                                        HomeViewRow(image: module.content.image, title: "Learn \(module.category)", description: module.content.description, count: "\(module.content.lessons.count) Lessons", time: module.content.time)
-                                    }
-                                NavigationLink(
-                                    destination:
-                                        TestView()
-                                        .onAppear(perform: {
-                                            model.beginTest(module.id)
-                                        }),
-                                    tag: module.id,
-                                    selection: $model.currentTestSelected) {
-                                        
-                                        
-                                        //Test Card
-                                        HomeViewRow(image: module.test.image, title: "\(module.category) Test", description: module.test.description, count: "\(module.test.questions.count) Lessons", time: module.test.time)
-                                        
-                                    }
-                                
+                                    NavigationLink(
+                                        destination:
+                                            ContentView()
+                                            .onAppear(perform: {
+                                                model.beginModule(module.id)
+                                            }),
+                                        tag: module.id,
+                                        selection: $model.currentContentSelected) {
+                                            //Learning Card
+                                            HomeViewRow(image: module.content.image, title: "Learn \(module.category)", description: module.content.description, count: "\(module.content.lessons.count) Lessons", time: module.content.time)
+                                        }
+                                    NavigationLink(
+                                        destination:
+                                            TestView()
+                                            .onAppear(perform: {
+                                                model.beginTest(module.id)
+                                            }),
+                                        tag: module.id,
+                                        selection: $model.currentTestSelected) {
+                                            
+                                            
+                                            //Test Card
+                                            HomeViewRow(image: module.test.image, title: "\(module.category) Test", description: module.test.description, count: "\(module.test.questions.count) Lessons", time: module.test.time)
+                                            
+                                        }
+                                    
                                 }
+                            
                             .padding(.bottom, 10)
                             }
                         }
@@ -56,8 +55,18 @@ struct HomeView: View {
                     }
                 }
                 .navigationTitle("Get Started")
+                .onChange(of: model.currentContentSelected) { changedValue in if changedValue == nil {
+                    model.currentModule = nil
+                }
+                }
+                .onChange(of: model.currentTestSelected) { changedValue in if changedValue == nil {
+                    model.currentModule = nil
+                }
+                }
             }
-            .navigationViewStyle(.stack)
+        .navigationViewStyle(.stack)
+        .navigationBarHidden(true)
+           
         }
     }
     
@@ -67,4 +76,3 @@ struct HomeView: View {
                 .environmentObject(ContentModel())
         }
     }
-
