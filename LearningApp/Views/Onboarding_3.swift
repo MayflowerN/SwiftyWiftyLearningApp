@@ -76,6 +76,8 @@ struct Onboarding_3: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
+                
+                NavigationLink("", destination: Onboarding_4(), isActive: $showOnboarding_4).hidden()
             }
             .navigationBarItems(trailing: Button(action: {
                 withAnimation {
@@ -89,14 +91,14 @@ struct Onboarding_3: View {
                     .foregroundColor(Color(red: 0.45, green: 0.38, blue: 0.95))
                     .frame(width: 128, height: 23.33333, alignment: .trailing)
             })
-            .fullScreenCover(isPresented: $showOnboarding_4) {
-                Onboarding_4()
-            }
+        
         }
         .navigationBarHidden(true)
         .navigationViewStyle(.stack)
     }
 }
+
+
 
 struct Onboarding_3_Previews: PreviewProvider {
     static var previews: some View {
